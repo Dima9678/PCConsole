@@ -1,11 +1,12 @@
 ﻿using Classes;
-using CommandsStorage;
 
-internal class Program
+public class Program
 {
+    public static readonly CommandHandler handler = new();
+    public static readonly PreStartClasses preStartClasses = new();
     static void Main(string[] args)
     {
-        CommandHandler handler = new CommandHandler();
+        preStartClasses.PreStartActions();
         Console.WriteLine("To see comand list print commands");
         while (true) 
         {

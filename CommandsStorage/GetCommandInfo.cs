@@ -26,7 +26,7 @@ namespace Classes
         public Command CommandFinder(string command)
         {
             List<Command> commandsList = commandsStorage.ReadCommands();
-            Command findedCommand = null;
+            Command? findedCommand = null;
 
             foreach (var command1 in commandsList)
             {
