@@ -12,16 +12,30 @@ namespace CommandsStorage
             JsonCommandsStorage commandsStorage = new JsonCommandsStorage();
             List<Command> commandsList = commandsStorage.ReadCommands();
 
-            for (int i = 0; i < commandsList.Count; i++)
+            if (inputCommand.Length >= 4)
             {
-                if (commandsList[i].CommandName == inputCommand)
+                if (inputCommand.Substring(0, 4) == "cmnd")
                 {
-                    Process.Start(commandsList[i].Filepath, commandsList[i].DirectoryPath);
-                    break;
+                    if (inputCommand == "cmnd remove")
+                    {
+                        commandsStorage.RemoveCommand();
+
+                    }
                 }
-                if (i == commandsList.Count - 1)
+            }
+            else
+            {
+                for (int i = 0; i < commandsList.Count; i++)
                 {
-                    Console.WriteLine("Неизвестная команда");
+                    if (commandsList[i].CommandName == inputCommand)
+                    {
+                        Process.Start(commandsList[i].Filepath, commandsList[i].DirectoryPath);
+                        break;
+                    }
+                    if (i == commandsList.Count - 1)
+                    {
+                        Console.WriteLine("Неизвестная команда");
+                    }
                 }
             }
         }

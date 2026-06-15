@@ -21,9 +21,7 @@ public class JsonCommandsStorage
             DirectoryPath = Path.GetPathRoot(pathToExe),
         };
 
-        string commandsFromJson = File.ReadAllText(JsonCommandsPath);
-        List<Command> commandsList = JsonSerializer.Deserialize<List<Command>>(commandsFromJson)
-            ?? new List<Command>();
+        List<Command> commandsList = ReadCommands();
 
         commandsList.Add(newCommand);
 
@@ -35,5 +33,45 @@ public class JsonCommandsStorage
         string jsonCommands = JsonSerializer.Serialize(commandsList, options);
 
         File.WriteAllText(JsonCommandsPath, jsonCommands);
+    }
+
+    public void RemoveCommand()
+    {
+        string commandsFromJson = File.ReadAllText(JsonCommandsPath);
+        List<Command> commandsList = ReadCommands();
+
+        for (int i = 0; i < commandsList.Count; i++)
+        {
+            Console.WriteLine($"{i.ToString("D2")}. {commandsList[i].CommandName} - {commandsList[i].CommandDescription}");
+        }
+
+        Console.Write("\nВведите номер команды для удаления: ");
+        string commandInputNumber = Console.ReadLine();
+        if (commandInputNumber != null)
+        {
+            int commandRemoveNumer = int.Parse(commandInputNumber);
+            if (commandRemoveNumer < commandsList.Count)
+            {
+                commandsList.RemoveAt(commandRemoveNumer);
+                Console.WriteLine("Команда успешно удалена");
+
+                var options = new JsonSerializerOptions
+                {
+                    WriteIndented = true,
+                    Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+                };
+                string jsonCommands = JsonSerializer.Serialize(commandsList, options);
+
+                File.WriteAllText(JsonCommandsPath, jsonCommands);
+            }
+            else
+            {
+                Console.WriteLine("Введенный индекс превышает количество команд");
+            }
+        }
+        else
+        {
+            Console.WriteLine("Введенны некоректные данные");
+        }
     }
 }
