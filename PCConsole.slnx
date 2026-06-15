@@ -1,3 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="Commands.json" />
+  </Folder>
+  <Project Path="CommandsStorage/Classes.csproj" />
   <Project Path="PCConsole/PCConsole.csproj" />
 </Solution>

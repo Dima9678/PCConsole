@@ -1,0 +1,8 @@
+[
+  {
+    "CommandName": "pga",
+    "CommandDescription": "open PG Admin application",
+    "Filepath": "S:\\PostgreSQL\\pgAdmin 4\\runtime\\pgAdmin4.exe",
+    "DirectoryPath": "S:\\PostgreSQL\\pgAdmin 4\\runtime"
+  }
+]
