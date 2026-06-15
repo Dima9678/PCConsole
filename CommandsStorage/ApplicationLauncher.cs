@@ -12,17 +12,17 @@ namespace CommandsStorage
             JsonCommandsStorage commandsStorage = new JsonCommandsStorage();
             List<Command> commandsList = commandsStorage.ReadCommands();
 
-            if (inputCommand.Length >= 4)
-            {
-                if (inputCommand.Substring(0, 4) == "cmnd")
-                {
-                    if (inputCommand == "cmnd remove")
-                    {
-                        commandsStorage.RemoveCommand();
 
-                    }
-                }
+            if (inputCommand == "cmnd remove")
+            {
+                commandsStorage.RemoveCommand();
             }
+            if (inputCommand == "cmnd add")
+            {
+                commandsStorage.AddCommand();
+            }
+
+
             else
             {
                 for (int i = 0; i < commandsList.Count; i++)

@@ -9,7 +9,8 @@ internal class Program
         while (true) 
         {
             Console.Write("//");
-            string inputCommand = Console.ReadLine();
+            //string inputCommand = Console.ReadLine();
+            string inputCommand = "cmnd add";
             applicationLauncher.LaunchCommand(inputCommand);
             Console.WriteLine("");
         }
