@@ -8,7 +8,7 @@ namespace Classes
     {
         public readonly CommandManager manager = new CommandManager();
         public readonly ConsoleUI consoleUi = new ConsoleUI();
-        public void LaunchCommand(string inputCommand)
+        public void CommandHandle(string inputCommand)
         {
             JsonCommandsStorage commandsStorage = new JsonCommandsStorage();
             List<Command> commandsList = commandsStorage.ReadCommands();
@@ -28,7 +28,7 @@ namespace Classes
             }
             else
             {
-
+                //поиск команды в базе данных, и если она существует LaunchCommand()
             }
         }
     }

@@ -11,7 +11,7 @@ internal class Program
         {
             Console.Write("//");
             string inputCommand = Console.ReadLine();
-            handler.LaunchCommand(inputCommand);
+            handler.CommandHandle(inputCommand);
             Console.WriteLine("");
         }
     }
