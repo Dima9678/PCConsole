@@ -26,13 +26,14 @@ public class CommandHandler
     public readonly CommandsLauncher commandsLauncher = new();
     public readonly ConsoleUI consoleUi = new ConsoleUI();
     public readonly JsonCommandsStorage commandsStorage = new();
+    public readonly CommandsConsoleHandler commandsConsoleHandler = new();
     public void CommandHandle(string inputCommand)
     {
         List<Command> commandsList = commandsStorage.ReadCommands();
 
         if (inputCommand == "cmnd remove")
         {
-            manager.RemoveCommand();
+            commandsConsoleHandler.RemoveCommandMenu();
         }
         else if (inputCommand == "cmnd add")
         {
@@ -40,7 +41,7 @@ public class CommandHandler
         }
         else if (inputCommand == "commands")
         {
-            consoleUi.PrintAllComands();
+            consoleUi.PrintAllComands(false);
         }
         else
         {
@@ -57,49 +58,29 @@ public class CommandManager
 {
     private readonly JsonCommandsStorage storage = new();
     private readonly CommandsOperations commandsOperations = new();
+    private readonly ConsoleInput consoleInput = new();
+    private readonly ConsoleUI consoleUI = new();
 
     public void AddCommand()
     {
         Command command = commandsOperations.CreateNewCommand();
-
         List<Command> commands = storage.ReadCommands();
 
         commands.Add(command);
-
         storage.WriteCommands(commands);
 
         Console.WriteLine("Команда успешно добавлена");
     }
-
-    public void RemoveCommand()
+    public bool RemoveCommand(int index)
     {
         List<Command> commandsList = storage.ReadCommands();
 
-        for (int i = 0; i < commandsList.Count; i++)
-        {
-            Console.WriteLine($"{i.ToString("D2")}. {commandsList[i].CommandName} - {commandsList[i].CommandDescription}");
-        }
+        if (index < 0 || index >= commandsList.Count)
+            return false;
 
-        Console.Write("\nВведите номер команды для удаления: ");
-        string commandInputNumber = Console.ReadLine();
-        if (commandInputNumber != null)
-        {
-            int commandRemoveNumer = int.Parse(commandInputNumber);
-            if (commandRemoveNumer < commandsList.Count)
-            {
-                commandsList.RemoveAt(commandRemoveNumer);
-                Console.WriteLine("Команда успешно удалена");
+        commandsList.RemoveAt(index);
+        storage.WriteCommands(commandsList);
 
-                storage.WriteCommands(commandsList);
-            }
-            else
-            {
-                Console.WriteLine("Введенный индекс превышает количество команд");
-            }
-        }
-        else
-        {
-            Console.WriteLine("Введенны некоректные данные");
-        }
+        return true;
     }
 }

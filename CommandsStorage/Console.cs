@@ -7,12 +7,19 @@ using System.Text;
 public class ConsoleUI
 {
     public readonly JsonCommandsStorage commandsStorage = new();
-    public void PrintAllComands()
+    public void PrintAllComands(bool needToEnumerate)
     {
         List<Command> commandsList = commandsStorage.ReadCommands();
         for (int i = 0; i < commandsList.Count; i++)
         {
-            Console.WriteLine($"{commandsList[i].CommandName} - {commandsList[i].CommandDescription}");
+            if (needToEnumerate) 
+            {
+                Console.WriteLine($"{i.ToString("D2")}. {commandsList[i].CommandName} - {commandsList[i].CommandDescription}");
+            }
+            else
+            {
+                Console.WriteLine($"{commandsList[i].CommandName} - {commandsList[i].CommandDescription}");
+            }
         }
     }
     public void PrintMovedFilesCount(List<string> movedFiles)
@@ -29,7 +36,7 @@ public class ConsoleUI
     }
 }
 
-internal class ConsoleInput
+public class ConsoleInput
 {
     public string ReadString(string message)
     {
@@ -71,5 +78,21 @@ internal class ConsoleInput
         return pathToExe;
     }
 
-    //Когда-нибудь тут будет еще readint
+    public int ReadInteger(string message)
+    {
+        while (true)
+        {
+            Console.WriteLine(message);
+            string inputString = Console.ReadLine();
+            if (int.TryParse(inputString, out int number))
+            {
+                return number;
+            }
+            else
+            {
+                Console.WriteLine("Ввод некорректен, повторите ввод");
+                continue;
+            }
+        }
+    }
 }
