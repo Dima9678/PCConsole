@@ -27,6 +27,7 @@ public class CommandHandler
     public readonly ConsoleUI consoleUi = new ConsoleUI();
     public readonly JsonCommandsStorage commandsStorage = new();
     public readonly CommandsConsoleHandler commandsConsoleHandler = new();
+    public readonly PasswordGenerator passwordGenerator = new();
     public void CommandHandle(string inputCommand)
     {
         List<Command> commandsList = commandsStorage.ReadCommands();
@@ -42,6 +43,10 @@ public class CommandHandler
         else if (inputCommand == "commands")
         {
             consoleUi.PrintAllComands(false);
+        }
+        else if (inputCommand == "pwg")
+        {
+            passwordGenerator.GeneratePasswords(10);
         }
         else
         {

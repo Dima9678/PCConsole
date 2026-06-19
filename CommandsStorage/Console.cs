@@ -95,4 +95,21 @@ public class ConsoleInput
             }
         }
     }
+    public int ReadInteger(string message, int maxValue)
+    {
+        while (true)
+        {
+            Console.WriteLine(message);
+            string inputString = Console.ReadLine();
+            if (int.TryParse(inputString, out int number) && number <= maxValue)
+            {
+                return number;
+            }
+            else
+            {
+                Console.WriteLine("Ввод некорректен, повторите ввод");
+                continue;
+            }
+        }
+    }
 }
