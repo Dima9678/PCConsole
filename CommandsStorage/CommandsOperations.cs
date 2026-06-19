@@ -5,11 +5,11 @@ using System.Text;
 namespace Classes
 {
     //Класс 
-    public class GetCommandInfo
+    public class CommandsOperations
     {
         private readonly ConsoleInput consoleInput = new();
         private readonly JsonCommandsStorage commandsStorage = new();
-        public Command GetNewCommand()
+        public Command CreateNewCommand()
         {
             string pathToExe = consoleInput.ReadExistingPath("Введите путь к файлу: ");
             string commandsName = consoleInput.ReadString("Введите команду: ");
