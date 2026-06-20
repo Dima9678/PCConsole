@@ -34,20 +34,25 @@ public class ConsoleUI
             Console.WriteLine("");
         }
     }
+    public void PrintMessage(string message)
+    {
+        Console.WriteLine(message);
+    }
 }
 
 public class ConsoleInput
 {
+    private readonly ConsoleUI consoleUI = new();
     public string ReadString(string message)
     {
         string inputString = string.Empty;
         while (true)
         {
-            Console.Write(message);
+            consoleUI.PrintMessage(message);
             inputString = Console.ReadLine();
             if (inputString == null)
             {
-                Console.WriteLine("Ввод некорректен, повторите ввод");
+                consoleUI.PrintMessage("Ввод некорректен, повторите ввод");
                 continue;
             }
             else
@@ -63,11 +68,11 @@ public class ConsoleInput
         string pathToExe = string.Empty;
         while (true)
         {
-            Console.Write(message);
+            consoleUI.PrintMessage(message);
             pathToExe = Console.ReadLine();
             if (pathToExe == null || !Path.Exists(pathToExe))
             {
-                Console.WriteLine("Ввод некорректен, повторите ввод");
+                consoleUI.PrintMessage("Ввод некорректен, повторите ввод");
                 continue;
             }
             else
@@ -82,7 +87,7 @@ public class ConsoleInput
     {
         while (true)
         {
-            Console.WriteLine(message);
+            consoleUI.PrintMessage(message);
             string inputString = Console.ReadLine();
             if (int.TryParse(inputString, out int number))
             {
@@ -90,7 +95,7 @@ public class ConsoleInput
             }
             else
             {
-                Console.WriteLine("Ввод некорректен, повторите ввод");
+                consoleUI.PrintMessage("Ввод некорректен, повторите ввод");
                 continue;
             }
         }
@@ -99,7 +104,7 @@ public class ConsoleInput
     {
         while (true)
         {
-            Console.WriteLine(message);
+            consoleUI.PrintMessage(message);
             string inputString = Console.ReadLine();
             if (int.TryParse(inputString, out int number) && number <= maxValue)
             {
@@ -107,7 +112,25 @@ public class ConsoleInput
             }
             else
             {
-                Console.WriteLine("Ввод некорректен, повторите ввод");
+                consoleUI.PrintMessage("Ввод некорректен, повторите ввод");
+                continue;
+            }
+        }
+    }
+    
+    public TimeOnly ReadTime(string message)
+    {
+        while (true)
+        {
+            consoleUI.PrintMessage(message);
+            string inputString = Console.ReadLine();
+            if (TimeOnly.TryParse(inputString, out TimeOnly timeOnly))
+            {
+                return timeOnly;
+            }
+            else
+            {
+                consoleUI.PrintMessage("Ввод некорректен, повторите ввод");
                 continue;
             }
         }

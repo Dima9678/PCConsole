@@ -28,7 +28,8 @@ public class CommandHandler
     public readonly JsonCommandsStorage commandsStorage = new();
     public readonly CommandsConsoleHandler commandsConsoleHandler = new();
     public readonly PasswordGenerator passwordGenerator = new();
-    public void CommandHandle(string inputCommand)
+    public readonly SystemController systemController = new();
+    public async Task CommandHandle(string inputCommand)
     {
         List<Command> commandsList = commandsStorage.ReadCommands();
 
@@ -48,12 +49,32 @@ public class CommandHandler
         {
             passwordGenerator.GeneratePasswords(10);
         }
+        else if (inputCommand == "sdon" || inputCommand == "sdof")
+        {
+            systemController.AudioOutputModeChanger(inputCommand);
+        }
+        else if (inputCommand == "do" || inputCommand == "db")
+        {
+            systemController.AudioOutputModeChanger(inputCommand);
+        }
+        else if (inputCommand == "sleep")
+        {
+            await systemController.TurnToSleep();
+        }
+        else if (inputCommand == "off")
+        {
+            systemController.PcTurnOff();
+        }
         else
         {
             Command command = getCommandInfo.CommandFinder(inputCommand);
             if (command != null)
             {
                 commandsLauncher.LaunchCommand(command);
+            }
+            else
+            {
+                consoleUi.PrintMessage("Такой команды не существует");
             }
         }
     }
@@ -74,7 +95,7 @@ public class CommandManager
         commands.Add(command);
         storage.WriteCommands(commands);
 
-        Console.WriteLine("Команда успешно добавлена");
+        consoleUI.PrintMessage("Команда успешно добавлена");
     }
     public bool RemoveCommand(int index)
     {
