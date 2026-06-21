@@ -10,6 +10,10 @@ public class Program
         Console.WriteLine("To see comand list print commands");
         while (true) 
         {
+            if (handler.isCmdMode)
+            {
+                Console.Write("cmd mode");
+            }
             Console.Write("//");
             string inputCommand = Console.ReadLine();
             handler.CommandHandle(inputCommand);

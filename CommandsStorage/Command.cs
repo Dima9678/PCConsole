@@ -31,64 +31,82 @@ public class CommandHandler
     public readonly SystemController systemController = new();
     public readonly PrecetsManager precetsManager = new();
     public readonly PrecetsHandler precetsHandler = new();
+    public readonly CommandTerminal commandTerminal = new();
+    public bool isCmdMode = false;
     public async Task CommandHandle(string inputCommand)
     {
-        if (inputCommand == Actions.Commands)
+        if (inputCommand == "cmd")
         {
-            consoleUi.PrintAllComands(false);
-            consoleUi.PrintIndent();
-            consoleUi.PrintAllPrecets(false);
-            consoleUi.PrintIndent();
-            Actions.PrintActions();
+            isCmdMode = true;
         }
-        else if (inputCommand == Actions.AddCommand)
+        else if (inputCommand == "exit")
         {
-            manager.AddCommand();
+            isCmdMode = false;
         }
-        else if (inputCommand == Actions.RemoveCommand)
+        else if (isCmdMode)
         {
-            commandsConsoleHandler.RemoveCommandMenu();
-        }
-        else if (inputCommand == Actions.PasswordGenerator)
-        {
-            passwordGenerator.GeneratePasswords(10);
-        }
-        else if (inputCommand == Actions.AudioOn || inputCommand == Actions.AudioOff)
-        {
-            systemController.AudioOutputModeChanger(inputCommand);
-        }
-        else if (inputCommand == Actions.DisplayOne || inputCommand == Actions.DisplayDouble)
-        {
-            systemController.ScreenModeChanger(inputCommand);
-        }
-        else if (inputCommand == Actions.Sleep)
-        {
-            await systemController.TurnToSleep();
-        }
-        else if (inputCommand == Actions.TurnOff)
-        {
-            systemController.PcTurnOff();
-        }
-        else if (Actions.IsPrecetCommand(inputCommand))
-        {
-            precetsHandler.PrecetLauncher(inputCommand);
-        }
-        else if (inputCommand == Actions.AddPrecet)
-        {
-            precetsManager.PrecetsCreator();
+            commandTerminal.ExecuteCmd(inputCommand);
         }
         else
         {
-            Command command = getCommandInfo.CommandFinder(inputCommand);
-            if (command != null)
+            if (inputCommand == Actions.Commands)
             {
-                commandsLauncher.LaunchCommand(command);
+                consoleUi.PrintAllComands(false);
+                consoleUi.PrintIndent();
+                consoleUi.PrintAllPrecets(false);
+                consoleUi.PrintIndent();
+                Actions.PrintActions();
+            }
+            else if (inputCommand == Actions.AddCommand)
+            {
+                manager.AddCommand();
+            }
+            else if (inputCommand == Actions.RemoveCommand)
+            {
+                commandsConsoleHandler.RemoveCommandMenu();
+            }
+            else if (inputCommand == Actions.PasswordGenerator)
+            {
+                passwordGenerator.GeneratePasswords(10);
+            }
+            else if (inputCommand == Actions.AudioOn || inputCommand == Actions.AudioOff)
+            {
+                systemController.AudioOutputModeChanger(inputCommand);
+            }
+            else if (inputCommand == Actions.DisplayOne || inputCommand == Actions.DisplayDouble)
+            {
+                systemController.ScreenModeChanger(inputCommand);
+            }
+            else if (inputCommand == Actions.Sleep)
+            {
+                await systemController.TurnToSleep();
+            }
+            else if (inputCommand == Actions.TurnOff)
+            {
+                systemController.PcTurnOff();
+            }
+            else if (Actions.IsPrecetCommand(inputCommand))
+            {
+                precetsHandler.PrecetLauncher(inputCommand);
+            }
+            else if (inputCommand == Actions.AddPrecet)
+            {
+                precetsManager.PrecetsCreator();
             }
             else
             {
-                consoleUi.PrintMessage("Такой команды не существует");
+                Command command = getCommandInfo.CommandFinder(inputCommand);
+                if (command != null)
+                {
+                    commandsLauncher.LaunchCommand(command);
+                }
+                else
+                {
+                    consoleUi.PrintMessage("Такой команды не существует");
+                }
             }
         }
+
     }
 }
 
