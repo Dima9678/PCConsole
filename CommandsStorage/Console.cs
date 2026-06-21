@@ -7,18 +7,36 @@ using System.Text;
 public class ConsoleUI
 {
     public readonly JsonCommandsStorage commandsStorage = new();
+    public readonly JsonPrecetsStorage precetsStorage = new();
     public void PrintAllComands(bool needToEnumerate)
     {
+        PrintMessage("Команды: ");
         List<Command> commandsList = commandsStorage.ReadCommands();
         for (int i = 0; i < commandsList.Count; i++)
         {
             if (needToEnumerate) 
             {
-                Console.WriteLine($"{i.ToString("D2")}. {commandsList[i].CommandName} - {commandsList[i].CommandDescription}");
+                PrintMessage($"{i.ToString("D2")}. {commandsList[i].CommandName} - {commandsList[i].CommandDescription}");
             }
             else
             {
-                Console.WriteLine($"{commandsList[i].CommandName} - {commandsList[i].CommandDescription}");
+                PrintMessage($"{commandsList[i].CommandName} - {commandsList[i].CommandDescription}");
+            }
+        }
+        
+        PrintIndent();
+
+        PrintMessage("Пресеты: ");
+        List<Precet> precetsList = precetsStorage.ReadPrecets();
+        for (int i = 0; i < precetsList.Count; i++)
+        {
+            if (needToEnumerate)
+            {
+                PrintMessage($"{i.ToString("D2")}. {precetsList[i].PrecetName} - {precetsList[i].PrecetDescription}");
+            }
+            else
+            {
+                PrintMessage($"{precetsList[i].PrecetName} - {precetsList[i].PrecetDescription}");
             }
         }
     }
@@ -33,6 +51,10 @@ public class ConsoleUI
             }
             Console.WriteLine("");
         }
+    }
+    public void PrintIndent()
+    {
+        Console.WriteLine("");
     }
     public void PrintMessage(string message)
     {

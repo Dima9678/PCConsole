@@ -33,45 +33,43 @@ public class CommandHandler
     public readonly PrecetsHandler precetsHandler = new();
     public async Task CommandHandle(string inputCommand)
     {
-        List<Command> commandsList = commandsStorage.ReadCommands();
-
-        if (inputCommand == "cmnd remove")
-        {
-            commandsConsoleHandler.RemoveCommandMenu();
-        }
-        else if (inputCommand == "cmnd add")
-        {
-            manager.AddCommand();
-        }
-        else if (inputCommand == "commands")
+        if (inputCommand == Actions.Commands)
         {
             consoleUi.PrintAllComands(false);
         }
-        else if (inputCommand == "pwg")
+        else if (inputCommand == Actions.AddCommand)
+        {
+            manager.AddCommand();
+        }
+        else if (inputCommand == Actions.RemoveCommand)
+        {
+            commandsConsoleHandler.RemoveCommandMenu();
+        }
+        else if (inputCommand == Actions.PasswordGenerator)
         {
             passwordGenerator.GeneratePasswords(10);
         }
-        else if (inputCommand == "sdon" || inputCommand == "sdof")
+        else if (inputCommand == Actions.AudioOn || inputCommand == Actions.AudioOff)
         {
             systemController.AudioOutputModeChanger(inputCommand);
         }
-        else if (inputCommand == "do" || inputCommand == "db")
+        else if (inputCommand == Actions.DisplayOne || inputCommand == Actions.DisplayDouble)
         {
-            systemController.AudioOutputModeChanger(inputCommand);
+            systemController.ScreenModeChanger(inputCommand);
         }
-        else if (inputCommand == "sleep")
+        else if (inputCommand == Actions.Sleep)
         {
             await systemController.TurnToSleep();
         }
-        else if (inputCommand == "off")
+        else if (inputCommand == Actions.TurnOff)
         {
             systemController.PcTurnOff();
         }
-        else if (inputCommand[0] == 'p' && inputCommand.Length == 4)
+        else if (Actions.IsPrecetCommand(inputCommand))
         {
             precetsHandler.PrecetLauncher(inputCommand);
         }
-        else if (inputCommand == "p add")
+        else if (inputCommand == Actions.AddPrecet)
         {
             precetsManager.PrecetsCreator();
         }

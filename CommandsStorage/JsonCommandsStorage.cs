@@ -24,7 +24,7 @@ public class JsonCommandsStorage
     }
 }
 
-class JsonPrecetsStorage
+public class JsonPrecetsStorage
 {
     private readonly string presetsJsonPath = @"Data/precets.json";
 
