@@ -29,6 +29,8 @@ public class CommandHandler
     public readonly CommandsConsoleHandler commandsConsoleHandler = new();
     public readonly PasswordGenerator passwordGenerator = new();
     public readonly SystemController systemController = new();
+    public readonly PrecetsManager precetsManager = new();
+    public readonly PrecetsHandler precetsHandler = new();
     public async Task CommandHandle(string inputCommand)
     {
         List<Command> commandsList = commandsStorage.ReadCommands();
@@ -64,6 +66,14 @@ public class CommandHandler
         else if (inputCommand == "off")
         {
             systemController.PcTurnOff();
+        }
+        else if (inputCommand[0] == 'p' && inputCommand.Length == 4)
+        {
+            precetsHandler.PrecetLauncher(inputCommand);
+        }
+        else if (inputCommand == "p add")
+        {
+            precetsManager.PrecetsCreator();
         }
         else
         {

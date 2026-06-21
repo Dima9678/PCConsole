@@ -62,7 +62,6 @@ public class ConsoleInput
         }
         return inputString;
     }
-
     public string ReadExistingPath(string message)
     {
         string pathToExe = string.Empty;
@@ -82,7 +81,6 @@ public class ConsoleInput
         }
         return pathToExe;
     }
-
     public int ReadInteger(string message)
     {
         while (true)
@@ -117,7 +115,6 @@ public class ConsoleInput
             }
         }
     }
-    
     public TimeOnly ReadTime(string message)
     {
         while (true)
@@ -134,5 +131,34 @@ public class ConsoleInput
                 continue;
             }
         }
+    }
+    public List<string> ReadCommandsList()
+    {
+        List<string> presets = new List<string>();
+
+        while (true) 
+        {
+            consoleUI.PrintMessage("Ввеите название команы или 0 для завершения добавления");
+
+            string input = Console.ReadLine();
+
+            if (!string.IsNullOrEmpty(input))
+            {
+                if (input == "0")
+                {
+                    return presets;
+                }
+                else
+                {
+                    presets.Add(input);
+                }
+            }
+            else
+            {
+                consoleUI.PrintMessage("Некорректный ввод");
+            }
+        }
+
+        return presets;
     }
 }

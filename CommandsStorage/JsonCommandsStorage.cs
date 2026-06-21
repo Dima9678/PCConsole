@@ -23,3 +23,27 @@ public class JsonCommandsStorage
         File.WriteAllText(JsonCommandsPath, jsonCommands);
     }
 }
+
+class JsonPrecetsStorage
+{
+    private readonly string presetsJsonPath = @"Data/precets.json";
+
+    public List<Precet> ReadPrecets()
+    {
+        string precetsFromJson = File.ReadAllText(presetsJsonPath);
+        List<Precet> precetsList = JsonSerializer.Deserialize<List<Precet>>(precetsFromJson)
+            ?? new List<Precet>();
+        return precetsList;
+    }
+    public void WritePrecets(List<Precet> precets)
+    {
+        var options = new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+        };
+        string jsonPrecets = JsonSerializer.Serialize(precets, options);
+
+        File.WriteAllText(presetsJsonPath, jsonPrecets);
+    }
+}
