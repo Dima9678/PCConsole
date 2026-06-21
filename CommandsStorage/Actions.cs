@@ -18,15 +18,40 @@
     public const string DisplayOne = "do";
     public const string DisplayDouble = "db";
 
+    public static readonly Dictionary<string, string> ActionsDescription = new()
+    {
+        {Commands, "Вывод всех команд на консоль"},
+        {AddCommand ,"Добавление команды"},
+        {RemoveCommand ,"Удаление команды"},
+        {AddPrecet ,"Добавление пресета"},
+        {PasswordGenerator ,"Генератор паролей"},
+        {Sleep ,"Отправить пк спать до определенного времени"},
+        {TurnOff ,"Выключение пк"},
+        {AudioOn ,"Переключение звука на динамики"},
+        {AudioOff ,"Переключение звука на монитор"},
+        {DisplayOne ,"Работать будет один монитор"},
+        {DisplayDouble ,"Включение обоих мониторов"}
+    };
+
     public static bool IsPrecetCommand(string inputCommand)
     {
-        if(inputCommand[0] == 'p' && inputCommand.Length == 4)
+        if (inputCommand[0] == 'p' && inputCommand.Length == 4)
         {
             return true;
         }
         else
         {
             return false;
+        }
+    }
+
+    public static void PrintActions()
+    {
+        ConsoleUI consoleUI = new ConsoleUI();
+        consoleUI.PrintMessage("Список действий: ");
+        foreach (var action in ActionsDescription)
+        {
+            consoleUI.PrintMessage($"{action.Key} - {action.Value}");
         }
     }
 }

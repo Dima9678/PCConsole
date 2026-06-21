@@ -36,6 +36,10 @@ public class CommandHandler
         if (inputCommand == Actions.Commands)
         {
             consoleUi.PrintAllComands(false);
+            consoleUi.PrintIndent();
+            consoleUi.PrintAllPrecets(false);
+            consoleUi.PrintIndent();
+            Actions.PrintActions();
         }
         else if (inputCommand == Actions.AddCommand)
         {

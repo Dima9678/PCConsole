@@ -23,9 +23,9 @@ public class ConsoleUI
                 PrintMessage($"{commandsList[i].CommandName} - {commandsList[i].CommandDescription}");
             }
         }
-        
-        PrintIndent();
-
+    }
+    public void PrintAllPrecets(bool needToEnumerate)
+    {
         PrintMessage("Пресеты: ");
         List<Precet> precetsList = precetsStorage.ReadPrecets();
         for (int i = 0; i < precetsList.Count; i++)
