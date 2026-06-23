@@ -42,7 +42,7 @@ namespace Classes
         {
             int movedCount = 0;
             FilesOnDesktop = Directory.GetFiles(DesktopPath);
-            //Не факт, что 
+
             for (int i = 0; i < FilesOnDesktop.Length; i++)
             {
                 if (Path.GetExtension(FilesOnDesktop[i]) != ".ini")

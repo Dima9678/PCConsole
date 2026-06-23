@@ -8,7 +8,7 @@ namespace Classes
     public class CommandsOperations
     {
         private readonly ConsoleInput consoleInput = new();
-        private readonly JsonCommandsStorage commandsStorage = new();
+        private readonly Storages commandsStorage = new();
         public Command CreateNewCommand()
         {
             string pathToExe = consoleInput.ReadExistingPath("Введите путь к файлу: ");

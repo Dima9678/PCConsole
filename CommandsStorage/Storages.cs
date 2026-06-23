@@ -1,6 +1,6 @@
 ﻿using System.Text.Encodings.Web;
 using System.Text.Json;
-public class JsonCommandsStorage
+public class Storages
 {
     private const string JsonCommandsPath = @"Data/commands.json";
 
@@ -45,5 +45,28 @@ public class JsonPrecetsStorage
         string jsonPrecets = JsonSerializer.Serialize(precets, options);
 
         File.WriteAllText(presetsJsonPath, jsonPrecets);
+    }
+}
+
+public class DirectoriesStorage
+{
+    public readonly string directoriesJsonPath = @"Data/Directories.json";
+    public List<Directories> ReadDirectories()
+    {
+        string commandsFromJson = File.ReadAllText(directoriesJsonPath);
+        List<Directories> directoriesList = JsonSerializer.Deserialize<List<Directories>>(commandsFromJson)
+            ?? new List<Directories>();
+        return directoriesList;
+    }
+    public void WriteDIrectories(List<Directories> directories)
+    {
+        var options = new JsonSerializerOptions
+        {
+            WriteIndented = true,
+            Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+        };
+        string jsonDirectories = JsonSerializer.Serialize(directories, options);
+
+        File.WriteAllText(directoriesJsonPath, jsonDirectories);
     }
 }

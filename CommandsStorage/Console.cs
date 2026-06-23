@@ -6,7 +6,7 @@ using System.Text;
 
 public class ConsoleUI
 {
-    public readonly JsonCommandsStorage commandsStorage = new();
+    public readonly Storages commandsStorage = new();
     public readonly JsonPrecetsStorage precetsStorage = new();
     public void PrintAllComands(bool needToEnumerate)
     {

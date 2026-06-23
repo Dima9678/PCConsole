@@ -25,13 +25,15 @@ public class CommandHandler
     public readonly CommandsOperations getCommandInfo = new();
     public readonly CommandsLauncher commandsLauncher = new();
     public readonly ConsoleUI consoleUi = new ConsoleUI();
-    public readonly JsonCommandsStorage commandsStorage = new();
+    public readonly Storages commandsStorage = new();
     public readonly CommandsConsoleHandler commandsConsoleHandler = new();
     public readonly PasswordGenerator passwordGenerator = new();
     public readonly SystemController systemController = new();
     public readonly PrecetsManager precetsManager = new();
     public readonly PrecetsHandler precetsHandler = new();
     public readonly CommandTerminal commandTerminal = new();
+    public readonly DirectoriesOperations directoriesOperations = new();
+
     public bool isCmdMode = false;
     public async Task CommandHandle(string inputCommand)
     {
@@ -93,6 +95,10 @@ public class CommandHandler
             {
                 precetsHandler.PrecetLauncher(inputCommand);
             }
+            else if (directoriesOperations.IsDirectoryCommand(inputCommand))
+            {
+                directoriesOperations.DirectoryHandler(inputCommand);
+            }
             else if (inputCommand == Actions.AddPrecet)
             {
                 precetsManager.PrecetsCreator();
@@ -116,7 +122,7 @@ public class CommandHandler
 
 public class CommandManager
 {
-    private readonly JsonCommandsStorage storage = new();
+    private readonly Storages storage = new();
     private readonly CommandsOperations commandsOperations = new();
     private readonly ConsoleInput consoleInput = new();
     private readonly ConsoleUI consoleUI = new();

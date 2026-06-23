@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Include="bin\debug\net10.0\data\Directories.json" />
     <Content Include="bin\debug\net10.0\data\Precets.json" />
   </ItemGroup>
 
@@ -17,6 +18,7 @@
 
   <ItemGroup>
     <PackageReference Include="AudioSwitcher.AudioApi.CoreAudio" Version="3.0.3" />
+    <PackageReference Include="Microsoft.VisualStudio.VsixColorCompiler" Version="17.0.31709.430" />
   </ItemGroup>
 
   <ItemGroup>
