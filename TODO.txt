@@ -1,22 +1,3 @@
-база данных программ
-пресеты, открывающие несколько программ
-
-всякие действия
-["scr1"] = "only 1 monitor",
-["scr2"] = "both monitors",
-["sleep"] = "time-based awakening",
-["sdon"] = "audio device = Динамики",
-["sdof"] = "audio device = EG240Y",
-["cnn exp"] = "export photo from Canon",
-["op src"] = "open opera and search",
-["off"] = "shutdown PC",
-["pw"] = "create random password",
-["wr"] = "write schedule",
-["ch"] = "change schedule",
-["todo add"] = "add task",
-["todo del"] = "delete task",
-["todo del all"] = "delete all tasks",
-["todo list"] = "print todo list",
 ["move"] = "move files from desktop"
 
 ["sf"] = @"S:\",
@@ -37,23 +18,6 @@
 
 Если рабочий. но время после 22 -> звук включить оба моника включить
 ----
-
-["sleep"] = () => Sleep(),
-["off"] = () => Process.Start("shutdown", "/s /t 0"),
-
-["fol tr"] = () => Process.Start("explorer.exe", "::{645FF040-5081-101B-9F08-00AA002F954E}"),
- static public Dictionary<string, Func<Task>> changeAudioInputs = new()
-    {
-        ["sdof"] = async () => await SwitchOutputAudioDevice("sdof"),
-        ["sdon"] = async () => await SwitchOutputAudioDevice("sdon"),
-    };
-
-----
-Намутить сон по таймеру
-намутить выключение звука в рабочик
+Сон по таймеру
 ----
 
-----
-Генератор паролей штука полезная
-Отправка сообщений по тг
-----

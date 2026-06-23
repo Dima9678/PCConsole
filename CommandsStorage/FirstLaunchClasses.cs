@@ -8,9 +8,22 @@ namespace Classes
     public class PreStartClasses
     {
         public readonly DesktopCleaner desktopCleaner = new();
+        public readonly WorkdayCalculator workdayCalculator = new();
+        public readonly SystemController systemController = new();
 
         public void PreStartActions()
         {
+            bool isWorkDay = workdayCalculator.Calculate();
+            if (isWorkDay)
+            {
+                systemController.AudioOutputModeChanger("sdof");
+                systemController.ScreenModeChanger("do");
+            }
+            else
+            {
+                systemController.AudioOutputModeChanger("sdon");
+                systemController.ScreenModeChanger("db");
+            }
             desktopCleaner.Clean();
         }
     }

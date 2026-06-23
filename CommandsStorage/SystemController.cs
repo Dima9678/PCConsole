@@ -32,48 +32,34 @@ public class SystemController
     }
 }
 
-public class WorkdayStorage
+public class WorkdayCalculator
 {
-    private string shedulePath = "shedule.json";
-
-    private void ReadJson()
+    DateTime startDay = new DateTime(2026, 06, 23);
+    public bool Calculate()
     {
-        Workday workday = JsonSerializer.Deserialize<Workday>(shedulePath);
-    }
-    private void WriteJson()
-    {
-        string str = string.Empty;
+        int passedDayCount = (DateTime.Today - startDay).Days;
+        int dayInCicle = passedDayCount % 4;
 
-        var options = new JsonSerializerOptions
+        if (dayInCicle == 0 || dayInCicle == 1)
         {
-            WriteIndented = true,
-        };
-
-        string serializatedText = JsonSerializer.Serialize(str, options);
-        File.WriteAllText(shedulePath, serializatedText);
+            return true;
+        }
+        else 
+        { 
+            return false;        
+        }
     }
 }
-public class WorkdayCalculate
-{
-
-}
-public class Workday
-{
-    private string numberOfDay { get; }
-
-    
-}
-
 public class AudioDeviceController
 {
     private CoreAudioController controller = new CoreAudioController();
     public async Task RunCommand(string command)
     {
-        if (command == "sdon")
+        if (command == "sdof")
         {
             await TurnOff();
         }
-        else if (command == "sdof")
+        else if (command == "sdon")
         {
             await TurnOn();
         }
@@ -144,7 +130,7 @@ public class PowerController
             Arguments =
             "-ExecutionPolicy Bypass -Command \"" +
 
-            "$action = New-ScheduledTaskAction -Execute 'powershell.exe' -Argument '-WindowStyle Hidden -Command exit'" +
+            "$action = New-ScheduledTaskAction -Execute 'cmd.exe'; " +
 
             $"$trigger = New-ScheduledTaskTrigger -Once -At '{time}'; " +
 
