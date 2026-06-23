@@ -5,7 +5,7 @@
     public void GeneratePasswords(int countOfPasswords)
     {
         consoleUI.PrintPasswordsDifficulties();
-        int passwordDifficulty = consoleInput.ReadInteger("Выберите сложность пароля: ",4);
+        int passwordDifficulty = consoleInput.ReadInteger("Выберите сложность пароля: ", 0, 4);
 
         for (int i = 0; i < countOfPasswords; i++)
         {

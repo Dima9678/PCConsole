@@ -61,6 +61,10 @@ public class CommandHandler
             {
                 manager.AddCommand();
             }
+            else if (inputCommand == Actions.EditCommand)
+            {
+                manager.EditCommand();
+            }
             else if (inputCommand == Actions.RemoveCommand)
             {
                 commandsConsoleHandler.RemoveCommandMenu();
@@ -138,5 +142,42 @@ public class CommandManager
         storage.WriteCommands(commandsList);
 
         return true;
+    }
+    public void EditCommand()
+    {
+        ConsoleUI consoleUI = new();
+        ConsoleInput consoleInput = new();
+
+        List<Command> commandsList = storage.ReadCommands();
+        consoleUI.PrintAllComands(true);
+
+        int indexOfCommand = consoleInput.ReadInteger
+            ("Введите номер команды для редактирования: ", 0, commandsList.Count - 1);
+
+        consoleUI.PrintCommandFields(commandsList[indexOfCommand]);
+
+        int indexOfField = consoleInput.ReadInteger
+            ("Введите номер поля для редактирования: ", 0, 3);
+
+        string newField = consoleInput.ReadString("Введите новое значение поля: ");
+
+        if (indexOfField == 0)
+        {
+            commandsList[indexOfCommand].CommandName = newField;
+        }
+        else if (indexOfField == 1) 
+        {
+            commandsList[indexOfCommand].CommandDescription = newField;
+        }
+        else if (indexOfField == 2)
+        {
+            commandsList[indexOfCommand].Filepath = newField;
+        }
+        else if (indexOfField == 3)
+        {
+            commandsList[indexOfCommand].DirectoryPath = newField;
+        }
+
+        storage.WriteCommands(commandsList);
     }
 }

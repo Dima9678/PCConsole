@@ -16,7 +16,7 @@ public class ConsoleUI
         {
             if (needToEnumerate) 
             {
-                PrintMessage($"{i.ToString("D2")}. {commandsList[i].CommandName} - {commandsList[i].CommandDescription}");
+                PrintMessage($"{i}. {commandsList[i].CommandName} - {commandsList[i].CommandDescription}");
             }
             else
             {
@@ -60,6 +60,15 @@ public class ConsoleUI
     {
         Console.WriteLine(message);
     }
+    public void PrintCommandFields(Command command)
+    {
+        Console.WriteLine($"""
+            0. Команда: {command.CommandName}
+            1. Описание команды: {command.CommandDescription}
+            2. Путь к запускаемому файлу: {command.Filepath}
+            3. Путь к родительской директории файла: {command.DirectoryPath}
+            """);
+    }
 }
 
 public class ConsoleInput
@@ -76,6 +85,11 @@ public class ConsoleInput
             {
                 consoleUI.PrintMessage("Ввод некорректен, повторите ввод");
                 continue;
+            }
+            if (inputString == "null")
+            {
+                inputString = null;
+                break;
             }
             else
             {
@@ -120,14 +134,19 @@ public class ConsoleInput
             }
         }
     }
-    public int ReadInteger(string message, int maxValue)
+    public int ReadInteger(string message, int minValue, int maxValue)
     {
         while (true)
         {
             consoleUI.PrintMessage(message);
             string inputString = Console.ReadLine();
-            if (int.TryParse(inputString, out int number) && number <= maxValue)
+            if (int.TryParse(inputString, out int number))
             {
+                if (number < minValue || number > maxValue)
+                {
+                    consoleUI.PrintMessage("Число выходит за границы допустимого ввода");
+                    continue;
+                }
                 return number;
             }
             else

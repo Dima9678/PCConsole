@@ -1,20 +1,15 @@
 ﻿public static class Actions
 {
     public const string Commands = "commands";
-
     public const string AddCommand = "cmnd add";
+    public const string EditCommand = "cmnd ed";
     public const string RemoveCommand = "cmnd remove";
-
     public const string AddPrecet = "p add";
-
     public const string PasswordGenerator = "pwg";
-
     public const string Sleep = "sleep";
     public const string TurnOff = "off";
-
     public const string AudioOn = "sdon";
     public const string AudioOff = "sdof";
-
     public const string DisplayOne = "do";
     public const string DisplayDouble = "db";
 
@@ -22,6 +17,7 @@
     {
         {Commands, "Вывод всех команд на консоль"},
         {AddCommand ,"Добавление команды"},
+        {EditCommand ,"Редактирование команды"},
         {RemoveCommand ,"Удаление команды"},
         {AddPrecet ,"Добавление пресета"},
         {PasswordGenerator ,"Генератор паролей"},
