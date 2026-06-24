@@ -10,12 +10,13 @@ namespace Classes
         public readonly DesktopCleaner desktopCleaner = new();
         public readonly WorkdayCalculator workdayCalculator = new();
         public readonly SystemController systemController = new();
-        TimeOnly currentTime = new();
-        TimeOnly maxTime = new(22,00);
+
+        TimeSpan tresholdTime = new(22, 00, 00);
+        TimeSpan timeNow = DateTime.Now.TimeOfDay;
 
         public void PreStartActions()
         {
-            if (currentTime > maxTime)
+            if (timeNow > tresholdTime)
             {
                 systemController.AudioOutputModeChanger("sdon");
                 systemController.ScreenModeChanger("dd");
