@@ -18,7 +18,7 @@ public class SystemController
     {
         PowerController controller = new();
         controller.TurnOff();
-        
+
     }
     public async Task TurnToSleep()
     {
@@ -44,14 +44,15 @@ public class WorkdayCalculator
         {
             return true;
         }
-        else 
-        { 
-            return false;        
+        else
+        {
+            return false;
         }
     }
 }
 public class AudioDeviceController
 {
+    private ConsoleUI ConsoleUI = new();
     private CoreAudioController controller = new CoreAudioController();
     public async Task RunCommand(string command)
     {
@@ -65,32 +66,38 @@ public class AudioDeviceController
         }
     }
 
-    private async Task TurnOff() 
+    private async Task TurnOff()
     {
-        var devices = await controller.GetPlaybackDevicesAsync();
-        foreach (var device in devices)
+        var defaultDevice = controller.DefaultPlaybackDevice;
+        if (defaultDevice.FullName != "EG240Y (NVIDIA High Definition Audio)")
         {
-
-            if (device.FullName == "EG240Y (NVIDIA High Definition Audio)")
+            var devices = await controller.GetPlaybackDevicesAsync();
+            foreach (var device in devices)
             {
-                await device.SetAsDefaultAsync();
-                Console.WriteLine("The audio device has been changed\nCurrent device: " + device.FullName + "\n");
-                break;
+                if (device.FullName == "EG240Y (NVIDIA High Definition Audio)")
+                {
+                    await device.SetAsDefaultAsync();
+                    ConsoleUI.PrintMessage("The audio device has been changed\nCurrent device: " + device.FullName + "\n");
+                    break;
+                }
             }
         }
     }
 
-    private async Task TurnOn() 
+    private async Task TurnOn()
     {
-        var devices = await controller.GetPlaybackDevicesAsync();
-        foreach (var device in devices)
+        var defaultDevice = controller.DefaultPlaybackDevice;
+        if (defaultDevice.FullName != "Динамики (High Definition Audio Device)")
         {
-
-            if (device.FullName == "Динамики (High Definition Audio Device)")
+            var devices = await controller.GetPlaybackDevicesAsync();
+            foreach (var device in devices)
             {
-                await device.SetAsDefaultAsync();
-                Console.WriteLine("The audio device has been changed\n Current device: " + device.FullName);
-                break;
+                if (device.FullName == "Динамики (High Definition Audio Device)")
+                {
+                    await device.SetAsDefaultAsync();
+                    ConsoleUI.PrintMessage("The audio device has been changed\n Current device: " + device.FullName);
+                    break;
+                }
             }
         }
     }
@@ -98,25 +105,37 @@ public class AudioDeviceController
 
 public class ScreenController
 {
+    ConsoleUI consoleUI = new();
+    MonitorsController monitorsController = new MonitorsController();
     public void SwitchDevice(string command)
     {
         if (command == "do")
         {
-            OneDisplay();
+            if (monitorsController.ReadMonitorsCount() == "2")
+            {
+                OneDisplay();
+            }
         }
-        else if(command == "dd")
+        else if (command == "dd")
         {
-            TwoDisplays();
+            if (monitorsController.ReadMonitorsCount() == "1")
+            {
+                TwoDisplays();
+            }
         }
     }
 
-    public void OneDisplay() 
+    public void OneDisplay()
     {
+        monitorsController.WriteMonitorsCount("1");
         Process.Start("DisplaySwitch.exe", "/internal");
+        consoleUI.PrintMessage("Мониторы переключены в режим internal");
     }
-    public void TwoDisplays() 
+    public void TwoDisplays()
     {
-        Process.Start("DisplaySwitch.exe", "/internal");
+        monitorsController.WriteMonitorsCount("2");
+        Process.Start("DisplaySwitch.exe", "/extend");
+        consoleUI.PrintMessage("Мониторы переключены в режим extend");
     }
 }
 
@@ -152,8 +171,24 @@ public class PowerController
             CreateNoWindow = true
         });
     }
-    public void TurnOff() 
+    public void TurnOff()
     {
         Process.Start("shutdown", "/s /t 0");
+    }
+}
+
+class MonitorsController
+{
+    private readonly string MonitorsPath = @"data/Monitors.txt";
+    public void WriteMonitorsCount(string monitorsCount) 
+    {
+        string stringMonitorsCount = monitorsCount.ToString();
+        File.WriteAllText(MonitorsPath, stringMonitorsCount);
+    }
+
+    public string ReadMonitorsCount()
+    {
+        string stringMonitorsCount = File.ReadAllText(MonitorsPath);
+        return stringMonitorsCount;
     }
 }
