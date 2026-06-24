@@ -11,10 +11,11 @@ public class Directories
 public class DirectoriesOperations
 {
     private readonly ConsoleUI consoleUI = new();
+    public readonly ConsoleInput consoleInput= new();
     private readonly DirectoriesStorage storage = new();
     public bool IsDirectoryCommand(string command) 
     {
-        if (command[0] == 'e' && command[1] == ' ')
+        if (command[0] == 'd' && command[1] == ' ')
         {
             return true;
         }
@@ -48,5 +49,17 @@ public class DirectoriesOperations
     public void DirectoriesLauncher(Directories directory)
     {
         Process.Start("explorer.exe", directory.DirectoryPath);
+    }
+
+    public void AddDirectory()
+    {
+        Directories directory = new();
+        directory.DirectoryPath = consoleInput.ReadExistingPath("Введите адрес директории: ");
+        directory.DirectoryCommand = consoleInput.ReadString("Введите команду для вызова директории: ");
+
+        List<Directories> directories = new();
+        directories = storage.ReadDirectories();
+        directories.Add(directory);
+        storage.WriteDIrectories(directories);
     }
 }

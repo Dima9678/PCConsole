@@ -103,6 +103,10 @@ public class CommandHandler
             {
                 precetsManager.PrecetsCreator();
             }
+            else if (inputCommand == Actions.DirectoryAdd)
+            {
+                directoriesOperations.AddDirectory();
+            }
             else
             {
                 Command command = getCommandInfo.CommandFinder(inputCommand);

@@ -104,7 +104,7 @@ public class ScreenController
         {
             OneDisplay();
         }
-        else if(command == "db")
+        else if(command == "dd")
         {
             TwoDisplays();
         }

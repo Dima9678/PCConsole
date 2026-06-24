@@ -11,7 +11,8 @@
     public const string AudioOn = "sdon";
     public const string AudioOff = "sdof";
     public const string DisplayOne = "do";
-    public const string DisplayDouble = "db";
+    public const string DisplayDouble = "dd";
+    public const string DirectoryAdd = "dir add";
 
     public static readonly Dictionary<string, string> ActionsDescription = new()
     {
@@ -26,7 +27,8 @@
         {AudioOn ,"Переключение звука на динамики"},
         {AudioOff ,"Переключение звука на монитор"},
         {DisplayOne ,"Работать будет один монитор"},
-        {DisplayDouble ,"Включение обоих мониторов"}
+        {DisplayDouble ,"Включение обоих мониторов"},
+        {DirectoryAdd ,"Добавить команду для открытия директории"},
     };
 
     public static bool IsPrecetCommand(string inputCommand)

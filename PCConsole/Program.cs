@@ -3,7 +3,7 @@
 public class Program
 {
     public static readonly CommandHandler handler = new();
-    public static readonly PreStartClasses preStartClasses = new();
+    public static readonly PreStart preStartClasses = new();
     static void Main(string[] args)
     {
         preStartClasses.PreStartActions();

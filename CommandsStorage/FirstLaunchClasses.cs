@@ -5,24 +5,34 @@ using System.Text;
 //Очистка рабочего стола
 namespace Classes
 {
-    public class PreStartClasses
+    public class PreStart
     {
         public readonly DesktopCleaner desktopCleaner = new();
         public readonly WorkdayCalculator workdayCalculator = new();
         public readonly SystemController systemController = new();
+        TimeOnly currentTime = new();
+        TimeOnly maxTime = new(22,00);
 
         public void PreStartActions()
         {
-            bool isWorkDay = workdayCalculator.Calculate();
-            if (isWorkDay)
+            if (currentTime > maxTime)
             {
-                systemController.AudioOutputModeChanger("sdof");
-                systemController.ScreenModeChanger("do");
+                systemController.AudioOutputModeChanger("sdon");
+                systemController.ScreenModeChanger("dd");
             }
             else
             {
-                systemController.AudioOutputModeChanger("sdon");
-                systemController.ScreenModeChanger("db");
+                bool isWorkDay = workdayCalculator.Calculate();
+                if (isWorkDay)
+                {
+                    systemController.AudioOutputModeChanger("sdof");
+                    systemController.ScreenModeChanger("do");
+                }
+                else
+                {
+                    systemController.AudioOutputModeChanger("sdon");
+                    systemController.ScreenModeChanger("dd");
+                }
             }
             desktopCleaner.Clean();
         }
